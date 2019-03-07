@@ -1,0 +1,16 @@
+{
+  "name": "nodejssqlite",
+  "version": "1.0.0",
+  "description": "sqlite api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aaron Chuah",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "sqlite3": "^4.0.6"
+  }
+}
