@@ -37,6 +37,23 @@ attendance.employeeID = employee.employee_uid
 	});
 });
 
+//Attendance Data
+app.get('/api/attendance/clockIn',(req,res)=>{
+	const cinTime = `SELECT attendance.employeeID,clockIn FROM attendance
+INNER JOIN employee ON 
+attendance.employeeID = employee.employee_uid
+`;
+
+	db.all(cinTime,[],(err,rows)=>{
+		if(err){
+	  	throw err;
+		}
+
+		res.status(200);
+		res.send(rows);
+	});
+});
+
 //Employee Data
 app.get('/api/employees',(req,res)=>{
 	const emp = `SELECT * FROM employee`;
