@@ -22,7 +22,7 @@ app.get('/', function(req, res){
 
 //Attendance Data
 app.get('/api/attendance',(req,res)=>{
-	const att = `SELECT attendance.*, employee.empName FROM attendance
+	const att = `SELECT attendance.*, employee.employeeName FROM attendance
 INNER JOIN employee ON 
 attendance.employeeID = employee.employee_uid
 ORDER BY attendance.clockIn DESC
