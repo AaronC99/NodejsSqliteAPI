@@ -38,12 +38,9 @@ ORDER BY attendance.clockIn DESC
 	});
 });
 
-//Attendance Data
-app.get('/api/attendance/clockIn',(req,res)=>{
-	const cinTime = `SELECT attendance.employeeID,clockIn FROM attendance
-INNER JOIN employee ON 
-attendance.employeeID = employee.employee_uid 
-`;
+//Pending
+app.get('/api/pending',(req,res)=>{
+	const cinTime = `SELECT employee.employee_uid,employee.employeeName FROM employee`;
 
 	db.all(cinTime,[],(err,rows)=>{
 		if(err){
