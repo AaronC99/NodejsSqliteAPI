@@ -24,7 +24,7 @@ app.get('/', function(req, res){
 app.get('/api/attendance',(req,res)=>{
 	const att = `SELECT attendance.*, employee.employeeName FROM attendance
 INNER JOIN employee ON 
-attendance.employeeID = employee.employee_uid
+attendance.employeeID = employee.employee_uid WHERE attendance.date > (date('now','-1 day'))
 ORDER BY attendance.clockIn DESC
 `;
 
@@ -40,7 +40,11 @@ ORDER BY attendance.clockIn DESC
 
 //Pending
 app.get('/api/pending',(req,res)=>{
-	const cinTime = `SELECT employee.employee_uid,employee.employeeName FROM employee`;
+	 const cinTime = `SELECT employee.employee_uid,employee.employeeName FROM employee`;
+	//const cinTime = `SELECT employee.employee_uid, employee.employeeName FROM employee as emp LEFT JOIN
+	//		attendance as att ON employeeName = att.employeeName
+	//		WHERE att.employeeName IS NULL
+	//		`;	
 
 	db.all(cinTime,[],(err,rows)=>{
 		if(err){
