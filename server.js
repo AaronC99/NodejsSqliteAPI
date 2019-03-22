@@ -17,7 +17,7 @@ app.use(allowCrossDomain);
 
 //Home Page
 app.get('/', function(req, res){
-  res.send('This is CoE E.A.T.S\'s API\nThis API connects SQLite3 database with Nodejs and Angular v7');
+  res.send('This is CoE E.A.T.S\'s API\nThis API connects SQLite3 database with Nodejs and Angular 7');
 });
 
 //Attendance Data
@@ -40,11 +40,10 @@ ORDER BY attendance.clockIn DESC
 
 //Pending
 app.get('/api/pending',(req,res)=>{
-	 const cinTime = `SELECT employee.employee_uid,employee.employeeName FROM employee`;
-	//const cinTime = `SELECT employee.employee_uid, employee.employeeName FROM employee as emp LEFT JOIN
-	//		attendance as att ON employeeName = att.employeeName
-	//		WHERE att.employeeName IS NULL
-	//		`;	
+	// const cinTime = `SELECT employee.employee_uid,employee.employeeName FROM employee`;
+	const cinTime = `SELECT employee.employee_uid,employee. employeeName from employee WHERE employee_uid not in (
+	SELECT attendance.employeeID from attendance
+	WHERE attendance.date = date('now','localtime'))`;
 
 	db.all(cinTime,[],(err,rows)=>{
 		if(err){
@@ -66,6 +65,22 @@ app.get('/api/employees',(req,res)=>{
 		res.status(200);
 		res.send(rows);
 	});
+
+//Splice
+app.get('/api/join',(req,res)=>{
+	const join = `SELECT * FROM employee LEFT OUTER JOIN attendance
+	ON employee.employee_uid = attendance.employeeID
+	WHERE attendance.date = date('now','localtime')`;
+
+	db.all(join,[],(err,rows)=>{
+		if(err){
+	  	throw err;
+		}
+
+		res.status(200);
+		res.send(rows);
+	});
+});
 	
 
 
